@@ -1,0 +1,226 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>JobPortal</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header>
+    <div class="logo">JobPortal</div>
+
+    <nav>
+        <a href="#" onclick="showHome(); return false;">Home</a>
+        <a href="#" onclick="showJobs(); return false;">Jobs</a>
+        <a href="#" onclick="showMyApplications(); return false;">My Applications</a>
+        <a href="#" onclick="showLogin(); return false;">Login</a>
+        <a href="#" onclick="showRegister(); return false;">Register</a>
+    </nav>
+</header>
+
+<!-- HOME -->
+<section id="home">
+
+    <div class="hero">
+        <h1>Find Your Dream Job</h1>
+        <p>Search jobs by title, company, location or skills</p>
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search jobs..."
+        >
+
+        <button onclick="searchJobs()">Search</button>
+    </div>
+
+    <h2>Available Jobs</h2>
+
+    <div class="jobs">
+
+        <div class="job-card">
+            <h3>Java Developer</h3>
+            <p>Company: ABC Technologies</p>
+            <p>Location: Hyderabad</p>
+            <p>Skills: Java, SQL</p>
+
+            <button onclick="applyJob(1, 'Java Developer')">
+                Apply Now
+            </button>
+        </div>
+
+        <div class="job-card">
+            <h3>Web Developer</h3>
+            <p>Company: XYZ Solutions</p>
+            <p>Location: Bangalore</p>
+            <p>Skills: HTML, CSS, JavaScript</p>
+
+            <button onclick="applyJob(2, 'Web Developer')">
+                Apply Now
+            </button>
+        </div>
+
+        <div class="job-card">
+            <h3>Software Engineer</h3>
+            <p>Company: Tech Solutions</p>
+            <p>Location: Chennai</p>
+            <p>Skills: Java, SQL, JavaScript</p>
+
+            <button onclick="applyJob(3, 'Software Engineer')">
+                Apply Now
+            </button>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- LOGIN -->
+<section id="login" class="form-section" style="display: none;">
+
+    <h2>Login</h2>
+
+    <input
+        type="email"
+        id="loginEmail"
+        placeholder="Email"
+    >
+
+    <br><br>
+
+    <input
+        type="password"
+        id="loginPassword"
+        placeholder="Password"
+    >
+
+    <br><br>
+
+    <button onclick="login()">Login</button>
+
+    <br><br>
+
+    <p>Don't have an account?</p>
+
+    <button onclick="showRegister()">Register</button>
+
+</section>
+
+<!-- REGISTER -->
+<section id="register" class="form-section" style="display: none;">
+
+    <h2>Register</h2>
+
+    <input
+        type="text"
+        id="registerName"
+        placeholder="Full Name"
+    >
+
+    <br><br>
+
+    <input
+        type="email"
+        id="registerEmail"
+        placeholder="Email"
+    >
+
+    <br><br>
+
+    <input
+        type="password"
+        id="registerPassword"
+        placeholder="Password"
+    >
+
+    <br><br>
+
+    <button onclick="register()">Register</button>
+
+    <br><br>
+
+    <p>Already have an account?</p>
+
+    <button onclick="showLogin()">Login</button>
+
+</section>
+
+<!-- APPLY FOR A JOB -->
+<section id="apply" class="form-section" style="display: none;">
+
+    <h2>Apply for Job</h2>
+
+    <p id="selectedJob"></p>
+
+    <br>
+
+    <input
+        type="text"
+        id="applicantName"
+        placeholder="Your Name"
+    >
+
+    <br><br>
+
+    <input
+        type="email"
+        id="applicantEmail"
+        placeholder="Your Email"
+    >
+
+    <br><br>
+
+    <input
+        type="text"
+        id="applicantSkills"
+        placeholder="Your Skills"
+    >
+
+    <br><br>
+
+    <button onclick="submitApplication()">
+        Submit Application
+    </button>
+
+</section>
+
+<!-- MY APPLICATIONS -->
+<section
+    id="myApplications"
+    class="form-section"
+    style="display: none;"
+>
+
+    <h2>My Applications</h2>
+
+    <p>
+        View the jobs you have applied for and check your application status.
+    </p>
+
+    <button onclick="loadMyApplications()">
+        Refresh Applications
+    </button>
+
+    <div id="applicationsList">
+        <p>Your applications will appear here.</p>
+    </div>
+
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <p>&copy; 2026 JobPortal. All rights reserved.</p>
+</footer>
+
+<!-- JAVASCRIPT -->
+<script src="script.js"></script>
+
+</body>
+
+</html>
