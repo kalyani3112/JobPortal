@@ -4,6 +4,7 @@ A web-based Job Application Portal developed using Java, MySQL, HTML, CSS, and J
 
 ## Features
 - User registration and login
+- Secure password hashing for newly registered users using PBKDF2 with HMAC-SHA256
 - View available jobs
 - Search jobs
 - Apply for jobs
@@ -61,10 +62,10 @@ The backend runs at `http://localhost:8080`.
 Open `frontend/index.html` in VS Code and select **Open with Live Server**.
 
 ## Testing
-The project has been tested locally for Java compilation, database connectivity, job listing, and application retrieval. Frontend features have also been tested locally.
+The project has been tested locally for Java compilation, database connectivity, registration, login, job listing, job application, and application retrieval.
 
 ## Future Enhancements
-- Secure authentication and password hashing
+- Password reset and recovery functionality
 - Recruiter accounts and role-based access
 - Improved validation and error handling
 - Online deployment
