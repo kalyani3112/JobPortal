@@ -2,6 +2,7 @@
 package com.jobportal.service;
 
 import com.jobportal.DBConnection;
+import com.jobportal.PasswordUtil;
 import com.jobportal.model.User;
 
 import java.sql.Connection;
@@ -12,8 +13,13 @@ import java.util.List;
 
 public class UserService {
 
-    // Register a new student
+    // Register a new student with a hashed password
     public boolean registerUser(String name, String email, String password) {
+
+        if (name == null || email == null || password == null
+                || name.isBlank() || email.isBlank() || password.isEmpty()) {
+            return false;
+        }
 
         String checkSql =
                 "SELECT student_id FROM students WHERE email = ?";
@@ -31,7 +37,7 @@ public class UserService {
             try (PreparedStatement checkStatement =
                          connection.prepareStatement(checkSql)) {
 
-                checkStatement.setString(1, email);
+                checkStatement.setString(1, email.trim());
 
                 try (ResultSet result = checkStatement.executeQuery()) {
                     if (result.next()) {
@@ -40,13 +46,15 @@ public class UserService {
                 }
             }
 
-            // Insert the new student
+            // Hash the password before saving it
+            String hashedPassword = PasswordUtil.hashPassword(password);
+
             try (PreparedStatement insertStatement =
                          connection.prepareStatement(insertSql)) {
 
-                insertStatement.setString(1, name);
-                insertStatement.setString(2, email);
-                insertStatement.setString(3, password);
+                insertStatement.setString(1, name.trim());
+                insertStatement.setString(2, email.trim());
+                insertStatement.setString(3, hashedPassword);
 
                 return insertStatement.executeUpdate() > 0;
             }
@@ -57,11 +65,16 @@ public class UserService {
         }
     }
 
-    // Return the student ID when login succeeds; return -1 otherwise
+    // Return the student ID when login succeeds; otherwise return -1
     public int loginUser(String email, String password) {
 
+        if (email == null || password == null
+                || email.isBlank() || password.isEmpty()) {
+            return -1;
+        }
+
         String sql =
-                "SELECT student_id FROM students WHERE email = ? AND password = ?";
+                "SELECT student_id, password FROM students WHERE email = ?";
 
         try (Connection connection = DBConnection.getConnection()) {
 
@@ -72,12 +85,19 @@ public class UserService {
             try (PreparedStatement statement =
                          connection.prepareStatement(sql)) {
 
-                statement.setString(1, email);
-                statement.setString(2, password);
+                statement.setString(1, email.trim());
 
                 try (ResultSet result = statement.executeQuery()) {
                     if (result.next()) {
-                        return result.getInt("student_id");
+
+                        int studentId = result.getInt("student_id");
+                        String storedPassword = result.getString("password");
+
+                        // Verify the submitted password against the stored hash
+                        if (PasswordUtil.verifyPassword(
+                                password, storedPassword)) {
+                            return studentId;
+                        }
                     }
                 }
             }
